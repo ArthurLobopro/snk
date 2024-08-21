@@ -1,6 +1,6 @@
 import type { Point } from "./point";
 
-export type Snake = Uint8Array & { _tag: "__Snake__" };
+export type Snake = Uint8Array & { _tag: "__Snake__"; };
 
 export const getHeadX = (snake: Snake) => snake[0] - 2;
 export const getHeadY = (snake: Snake) => snake[1] - 2;
@@ -19,9 +19,14 @@ export const snakeEquals = (a: Snake, b: Snake) => {
  */
 export const nextSnake = (snake: Snake, dx: number, dy: number) => {
   const copy = new Uint8Array(snake.length);
-  for (let i = 2; i < snake.length; i++) copy[i] = snake[i - 2];
+
+  for (let i = 2; i < snake.length; i++) {
+    copy[i] = snake[i - 2];
+  };
+
   copy[0] = snake[0] + dx;
   copy[1] = snake[1] + dy;
+
   return copy as Snake;
 };
 
@@ -46,7 +51,7 @@ export const snakeToCells = (snake: Snake): Point[] =>
 
 export const createSnakeFromCells = (points: Point[]) => {
   const snake = new Uint8Array(points.length * 2);
-  for (let i = points.length; i--; ) {
+  for (let i = points.length; i--;) {
     snake[i * 2 + 0] = points[i].x + 2;
     snake[i * 2 + 1] = points[i].y + 2;
   }
